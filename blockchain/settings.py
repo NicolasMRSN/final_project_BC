@@ -55,7 +55,7 @@ ROOT_URLCONF = 'blockchain.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['blockchain/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
