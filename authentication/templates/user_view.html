@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<title>{{ user.username }}</title>
+<h1>{{ user.username }}</h1>
+<div class="row">
+    <div class="col-md-8">
+        <img src="{% static user.image %}" alt="" width="100%">
+    </div>
+    <div class="col-md-4">
+        <h5>Password:</h5>
+        <p>{{ user.password }}</p>
+        <br>
+        <a href="{% url 'users_list' %}" class="btn btn-primary">View Users</a>
+    </div>
+</div>
+{% endblock %}

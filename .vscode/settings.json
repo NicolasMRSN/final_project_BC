@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "/usr/local/anaconda3/envs/blockchain/bin/python"
+    "python.pythonPath": "/usr/local/anaconda3/envs/blockchain/bin/python",
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+   ],
+   "autoDocstring.docstringFormat": "google",
 }
