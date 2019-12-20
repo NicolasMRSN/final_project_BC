@@ -12,12 +12,12 @@ def take_picture():
     del (camera)
     return im
 
-def format_picture_jpeg(user, im):
+def format_picture_jpeg(im, user="default"):
     """
 
     :param user: str, ID of the user
     :param im: numpy.ndarray, picture took by handle_picture.take_picture()
-    :return: str, name of the .jpeg file.
+    :return: str, name of the .jpeg file. None if error
     """
     if isinstance(user, str) is False:
         return 84
@@ -25,13 +25,9 @@ def format_picture_jpeg(user, im):
         return 84
     print("Taking image...")
     working_directory = os.getcwd()
-    file = working_directory + "/" + user + ".jpeg"
-    cv2.imwrite(file, im)
+    try:
+        file = working_directory + "/" + user + ".jpeg"
+        cv2.imwrite(file, im)
+    except:
+        return None
     return file
-
-def send_encrypted_picture_to_server():
-    """
-
-    :return: void.
-    """
-    return
