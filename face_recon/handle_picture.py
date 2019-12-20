@@ -26,7 +26,7 @@ def format_picture_jpeg(im, user="default"):
     print("Taking image...")
     working_directory = os.getcwd()
     try:
-        file = working_directory + "/" + user + ".jpeg"
+        file = working_directory + "/authentication/static/img/" + user + ".jpeg"
         cv2.imwrite(file, im)
     except:
         return None

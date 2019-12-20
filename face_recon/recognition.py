@@ -1,5 +1,4 @@
 import face_recognition
-import handle_picture
 import numpy as np
 
 def encrypt_picture(im):
@@ -46,8 +45,8 @@ def recognize(im_from_db, im_to_check):
     :param im_to_check: numpy.ndarray, encrypted image of the user who wants to be verified
     :return: Boolean, True if verified, False if not verified.
     """
-    if isinstance(im_from_server, np.ndarray) is False or isinstance(im_from_db, np.ndarray) is False:
+    if isinstance(im_to_check, np.ndarray) is False or isinstance(im_from_db, np.ndarray) is False:
         return False
-    ret = face_recognition.compare_faces([im_from_server], im_to_check)
+    ret = face_recognition.compare_faces([im_from_db], im_to_check)
     return ret[0]
 

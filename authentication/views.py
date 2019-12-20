@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from authentication.models import User
 from authentication.forms import login
-from face_recognition
+from blockchain.auth_backend import FacialAuth
+import face_recon.handle_picture as hd
+import face_recon.recognition as recon
+from datetime import datetime
 
 # Create your views here.
 def login_password(request):
@@ -26,9 +29,16 @@ def login_face(request):
         form = login.LoginFace(request.POST)
         if form.is_valid():
             try:
-                user = User.objects.get(username=form.cleaned_data['username'])
-
-                return HttpResponseRedirect('users/' + str(user.pk))
+                username = form.cleaned_data['username']
+                user = User.objects.get(username=username)
+                timestamp = datetime.now()
+                encrypted_img = recon.encrypt_picture(hd.format_picture_jpeg(hd.take_picture(), timestamp.strftime("%Y%m%d%H%M%S%f")))
+                facialAuth = FacialAuth()
+                valid = facialAuth.authenticate(request, username=username, encrypted_img=encrypted_img)
+                if valid is not None:
+                    return HttpResponseRedirect('users/' + str(user.pk))
+                else:
+                    form = login.LoginFace
             except User.DoesNotExist:
                 form = login.LoginFace
     else:

@@ -1,5 +1,5 @@
 from django.db import models
-import face_recon
+import face_recon.recognition as recon
 import bcrypt
 
 # Create your models here.
@@ -13,6 +13,7 @@ class User(models.Model):
     private_key = models.TextField(max_length=256)
 
     def User(self, username="", password="", wallet_id="", encrypted_img="", private_key=""):
+        return
 
     def set_username(self, username):
         self.username = username
@@ -24,7 +25,7 @@ class User(models.Model):
         self.wallet_id = wallet_id
 
     def set_encrypted_img(self, encrypted_img):
-        self.encrypted_img_str = face_recon.get_encrypted_picture_str(encrypted_picture=encrypted_img)
+        self.encrypted_img_str = recon.get_encrypted_picture_str(encrypted_picture=encrypted_img)
 
     def set_private_key(self, private_key):
         self.private_key = private_key
