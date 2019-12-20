@@ -1,5 +1,6 @@
 from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.hashers import check_password
+import bcrypt
+import face_recon
 from authentication.models import User
 
 class FacialAuth(BaseBackend):
@@ -7,8 +8,8 @@ class FacialAuth(BaseBackend):
         # Check the username/password username/image and return a user.
         try:
             user = User.objects.get(username=username)
-            pwd_valid = check_password(password, user.password)
-            img_valid = False
+            pwd_valid = bcrypt.checkpw(password=password, hashed_password=user.password)
+            img_valid = face_recon.recognize()
             if pwd_valid or img_valid:
                 return user
             else:
