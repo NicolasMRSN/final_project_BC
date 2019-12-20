@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import blockchain.auth_backend
+#import blockchain.auth_backend
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3s5btd(d!94f@130u4#5!3$*y2x4(tvt%&(k1if8b4qcs3zf66'
+SECRET_KEY = "3s5btd(d!94f@130u4#5!3$*y2x4(tvt%&(k1if8b4qcs3zf66"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -122,6 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTHENTICATION_BACKENDS = (
-    blockchain.auth_backend
-)
+AUTHENTICATION_BACKENDS = [
+    'blockchain.auth_backend',
+]

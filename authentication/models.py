@@ -7,4 +7,3 @@ class User(models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     wallet_id = models.CharField(max_length=42)
-    encrypted_img = models.FilePathField(path='/authentication/img/')
