@@ -5,6 +5,8 @@ class Blockchain():
     ganache_url = "http://127.0.0.1:7545"
     accounts = None
     client = None
+    transactions_hashes = []
+    transactions = []
 
     def __init__(self):
         self.connectClient()
@@ -26,6 +28,20 @@ class Blockchain():
     def getURL(self):
         return self.ganache_url
 
+    def getTransactionsHashes(self):
+        return self.transactions_hashes
+
+    def getTransactions(self):
+        return self.transactions
+
+    def setTransactions(self):
+        for hash in self.transactions_hashes:
+            transaction = self.client.eth.getTransaction(hash)
+            self.transactions.append([transaction["blockHash"], transaction["from"], transaction["to"], self.client.fromWei(transaction["value"], 'ether')])
+    
+    def setAccounts(self):
+        self.accounts = self.client.eth.accounts
+
     def make_transaction(self, sender, receiver, private_key, amount):
         nonce = self.client.eth.getTransactionCount(sender)
 
@@ -38,14 +54,5 @@ class Blockchain():
         }
 
         signed_tx = self.client.eth.account.signTransaction(tx, private_key)
-        tx_hash = self.client.eth.sendRawTransaction(signed_tx.rawTransaction)
-        print(self.client.toHex(tx_hash))
-        return self.client.toHex(tx_hash)
-
-    def getTransaction(self, hash_transaction):
-        print(self.client.eth.getTransaction(hash_transaction))
-        value = self.client.eth.getTransaction(hash_transaction)
-        return self.client.eth.getTransaction(hash_transaction)
-
-    def setAccounts(self):
-        self.accounts = self.client.eth.accounts
+        tx_hash = self.client.toHex(self.client.eth.sendRawTransaction(signed_tx.rawTransaction))
+        self.transactions_hashes.append(tx_hash)
