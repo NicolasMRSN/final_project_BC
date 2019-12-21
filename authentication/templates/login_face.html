@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h1>Face-Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="{% url 'login_password' %}" class="badge badge-light">Password-Login</a>
+    <a href="{% url 'register' %}" class="badge badge-light">Register</a>
+{% endblock %}
