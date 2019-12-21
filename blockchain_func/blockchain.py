@@ -29,9 +29,9 @@ class Blockchain():
         tx = {
             'nonce': nonce,
             'to': receiver,
-            'value': client.toWei(amount, 'ether'),
+            'value': self.client.toWei(amount, 'ether'),
             'gas': 2000000,
-            'gasPrice': client.toWei('50', 'gwei')
+            'gasPrice': self.client.toWei('50', 'gwei')
         }
 
         signed_tx = self.client.eth.account.signTransaction(tx, private_key)
