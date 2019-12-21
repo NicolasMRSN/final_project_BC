@@ -1,6 +1,5 @@
 from web3 import Web3
 
-
 class Blockchain():
 
     ganache_url = "http://127.0.0.1:7545"
@@ -9,10 +8,9 @@ class Blockchain():
     def __init__(self):
         self.connectClient()
 
-
     def connectClient(self):
         try:
-            self.client = Web3(Web3.HTTPProvider(ganache_url))
+            self.client = Web3(Web3.HTTPProvider(self.getURL()))
         except:
             print("Connection to the web3 client failed.")
 
