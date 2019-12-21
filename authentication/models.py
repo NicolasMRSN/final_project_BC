@@ -12,7 +12,7 @@ class User(models.Model):
     encrypted_img_str = models.TextField(max_length=3000)
     private_key = models.TextField(max_length=256)
 
-    def User(self, username="", password="", wallet_id="", encrypted_img="", private_key=""):
+    def __init__(self, username="", password="", wallet_id="", encrypted_img="", private_key=""):
         return
 
     def set_username(self, username):
