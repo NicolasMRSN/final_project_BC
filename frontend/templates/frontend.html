@@ -10,33 +10,41 @@
     <h1>Hello Bye<h1>
             <table class="table">
                 <thead>
-                    <tr>#</tr>
-                    <tr>User</tr>
-                    <tr>Wallet</tr>
+                    <th>#</th>
+                    <th>User</th>
                 </thead>
                 <tbody>
                     {% for user in users %}
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.wallet }}</td>
+                    <tr>
+                        <th scope="row">{{ user.wallet_id }}</th>
+                        <td>{{ user.username }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <table class="table">
                 <thead>
-                    <tr>#</tr>
-                    <tr>Sender</tr>
-                    <tr>Receiver</tr>
-                    <tr>Amount</tr>
+                    <th>#</th>
+                    <th>Sender</th>
+                    <th>Receiver</th>
+                    <th>Amount</th>
                 </thead>
                 <tbody>
-                    {% for user in users %}
-                     <td>{{ user.sender }}</td>
-                    <td>{{ user.receiver }}</td>
-                    <td>{{ user.amount }}</td>
+                    {% for transaction in transactions %}
+                    {% for field in transaction %}
+                    <tr>
+                        <td> {{ field }} </td>
                     </tr>
+                    {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>
+            <h1>Make transactions</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div class=""></div>
 </body>
 {% endblock %}
