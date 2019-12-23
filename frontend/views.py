@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from authentication.models import User
 from 'blockchain_func/blockchain' import Blockchain
+from authentication.models import FaceAuthUser
+
 # Create your views here.
 def frontend(request):
     """Show all information stored about a single user.
@@ -12,8 +14,7 @@ def frontend(request):
         render: show_user.html
     """
     bc = Blockchain()
-    bc.setAccounts()
-    user = bc.accounts
+    user = FaceAuthUser.objects.get(pk=pk)
     transaction = bc.getTransactions()
     context = {
         'user' : user,
