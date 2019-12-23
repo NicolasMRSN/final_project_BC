@@ -9,6 +9,9 @@ import bcrypt
 
 # Create your views here.
 facial_auth = FacialAuth()
+from blockchain_func.blockchain import Blockchain
+
+current_user_id = 0 # global variable
 
 def login_password(request):
     if request.method == 'POST':
@@ -42,11 +45,10 @@ def login_face(request):
                 timestamp = datetime.now()
                 encrypted_img = recon.encrypt_picture(hd.format_picture_jpeg(
                     hd.take_picture(), timestamp.strftime("%Y%m%d%H%M%S%f")))
-                facial_auth = FacialAuth()
                 valid = facial_auth.authenticate(
                     request, username=username, encrypted_img=encrypted_img)
-                if valid is not None:
-                    return redirect('user_view', private_key=user.private_key)
+                if valid:
+                    return redirect('user_view')
                 else:
                     form = login.LoginFace
             except FaceAuthUser.DoesNotExist:
@@ -70,8 +72,11 @@ def users_list(request):
 def user_view(request):
     if facial_auth.get_user() is None:
         return redirect('login_password')
+    user = facial_auth.get_user()
+    global current_user_id
+    current_user_id = user.pk
     context = {
-        'user': facial_auth.get_user()
+        'user': user
     }
     return render(request, 'user_view.html', context)
 

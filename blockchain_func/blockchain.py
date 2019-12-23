@@ -1,4 +1,5 @@
 from web3 import Web3
+import authentication.views
 
 class Blockchain():
 
@@ -42,8 +43,9 @@ class Blockchain():
     def setAccounts(self):
         self.accounts = self.client.eth.accounts
 
-    def make_transaction(self, sender, receiver, private_key, amount):
-        nonce = self.client.eth.getTransactionCount(sender)
+    def make_transaction(self, receiver, private_key, amount):
+        nonce = self.client.eth.getTransactionCount(self.accounts[authentication.views.current_user_id - 1])
+        print(nonce)
 
         tx = {
             'nonce': nonce,
