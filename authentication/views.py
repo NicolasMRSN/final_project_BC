@@ -8,7 +8,7 @@ from datetime import datetime
 import bcrypt
 
 # Create your views here.
-
+facial_auth = FacialAuth()
 
 def login_password(request):
     if request.method == 'POST':
@@ -16,14 +16,12 @@ def login_password(request):
         if form.is_valid():
             try:
                 username = form.cleaned_data['username']
-                user = FaceAuthUser.objects.get(username=username)
-                facial_auth = FacialAuth()
                 valid = facial_auth.authenticate(
                     request, username=username, password=form.cleaned_data['password'])
-                if valid is not None:
-                    return redirect('user_view', user)
+                if valid:
+                    return redirect('user_view')
                 else:
-                    form = login.LoginFace
+                    form = login.LoginPassword()
             except FaceAuthUser.DoesNotExist:
                 form = login.LoginPassword
     else:
@@ -48,7 +46,7 @@ def login_face(request):
                 valid = facial_auth.authenticate(
                     request, username=username, encrypted_img=encrypted_img)
                 if valid is not None:
-                    return redirect('user_view', user)
+                    return redirect('user_view', private_key=user.private_key)
                 else:
                     form = login.LoginFace
             except FaceAuthUser.DoesNotExist:
@@ -69,11 +67,11 @@ def users_list(request):
     return render(request, 'users_list.html', context)
 
 
-def user_view(request, user=None):
-    if user is None:
-        return redirect('login_face')
+def user_view(request):
+    if facial_auth.get_user() is None:
+        return redirect('login_password')
     context = {
-        'user': user
+        'user': facial_auth.get_user()
     }
     return render(request, 'user_view.html', context)
 
