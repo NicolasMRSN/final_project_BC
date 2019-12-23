@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from blockchain_func.blockchain import Blockchain
 from authentication.models import FaceAuthUser
-from blockchain.auth_backend import FacialAuth
 from frontend.forms.transaction import Transaction
+from authentication.views import facial_auth
+
 
 
 # Create your views here.
@@ -15,7 +16,10 @@ def frontend(request):
     Returns:
         render: show_user.html
     """
-    user = FaceAuthUser.objects.get(pk=1)
+    user = facial_auth.get_user()
+    if user is None:
+        return redirect('login_password')
+    #user = FaceAuthUser.objects.get(pk=1)
     global current_user_id
     current_user_id = user.pk
     bc = Blockchain()

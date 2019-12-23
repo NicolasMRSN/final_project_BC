@@ -7,11 +7,12 @@ import face_recon.recognition as recon
 from datetime import datetime
 import bcrypt
 
+facial_auth = FacialAuth()
+
 # Create your views here.
 current_user_id = 0 # global variable
 
 def login_password(request):
-    facial_auth = FacialAuth()
     if request.method == 'POST':
         form = login.LoginPassword(request.POST)
         if form.is_valid():
@@ -34,7 +35,6 @@ def login_password(request):
 
 
 def login_face(request):
-    facial_auth = FacialAuth()
     if request.method == 'POST':
         form = login.LoginFace(request.POST)
         if form.is_valid():
