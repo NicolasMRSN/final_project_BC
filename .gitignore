@@ -1,5 +1,4 @@
-frontend/__pycache__/
-blockchain_func/__pycache__/
 .vscode/
 authentication/__pycache__/
 authentication/migrations/
+*.pyc
