@@ -1,9 +1,42 @@
 {% extends "base.html" %}
 
 {% block page_content %}
+
 <head>
     <title>Blockchain</title>
 </head>
 
-<h1>Hello ByeBye<h1>
+<body>
+    <h1>Hello Bye<h1>
+            <table class="table">
+                <thead>
+                    <tr>#</tr>
+                    <tr>User</tr>
+                    <tr>Wallet</tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.wallet }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table class="table">
+                <thead>
+                    <tr>#</tr>
+                    <tr>Sender</tr>
+                    <tr>Receiver</tr>
+                    <tr>Amount</tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <td>{{ user.sender }}</td>
+                    <td>{{ user.receiver }}</td>
+                    <td>{{ user.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+</body>
 {% endblock %}
