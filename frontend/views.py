@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from authentication.models import User
+from authentication.models import FaceAuthUser
 
 # Create your views here.
 def frontend(request):
@@ -11,7 +11,7 @@ def frontend(request):
     Returns:
         render: show_user.html
     """
-    user = User.objects.get(pk=pk)
+    user = FaceAuthUser.objects.get(pk=pk)
     context = {
         'user' : user
     }
