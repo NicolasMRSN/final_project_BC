@@ -8,12 +8,10 @@ from datetime import datetime
 import bcrypt
 
 # Create your views here.
-facial_auth = FacialAuth()
-from blockchain_func.blockchain import Blockchain
-
 current_user_id = 0 # global variable
 
 def login_password(request):
+    facial_auth = FacialAuth()
     if request.method == 'POST':
         form = login.LoginPassword(request.POST)
         if form.is_valid():
@@ -22,7 +20,7 @@ def login_password(request):
                 valid = facial_auth.authenticate(
                     request, username=username, password=form.cleaned_data['password'])
                 if valid:
-                    return redirect('user_view')
+                    return redirect('frontend')
                 else:
                     form = login.LoginPassword()
             except FaceAuthUser.DoesNotExist:
@@ -36,6 +34,7 @@ def login_password(request):
 
 
 def login_face(request):
+    facial_auth = FacialAuth()
     if request.method == 'POST':
         form = login.LoginFace(request.POST)
         if form.is_valid():
@@ -48,7 +47,7 @@ def login_face(request):
                 valid = facial_auth.authenticate(
                     request, username=username, encrypted_img=encrypted_img)
                 if valid:
-                    return redirect('user_view')
+                    return redirect('frontend')
                 else:
                     form = login.LoginFace
             except FaceAuthUser.DoesNotExist:
@@ -59,26 +58,6 @@ def login_face(request):
         'form': form
     }
     return render(request, 'login_face.html', context)
-
-
-def users_list(request):
-    users = FaceAuthUser.objects.all()
-    context = {
-        'users': users
-    }
-    return render(request, 'users_list.html', context)
-
-
-def user_view(request):
-    if facial_auth.get_user() is None:
-        return redirect('login_password')
-    user = facial_auth.get_user()
-    global current_user_id
-    current_user_id = user.pk
-    context = {
-        'user': user
-    }
-    return render(request, 'user_view.html', context)
 
 
 def register(request):

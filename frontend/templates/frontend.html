@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    <h1>Hello Bye<h1>
             <table class="table">
                 <thead>
                     <th>#</th>
@@ -22,29 +21,29 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <table class="table">
-                <thead>
-                    <th>#</th>
-                    <th>Sender</th>
-                    <th>Receiver</th>
-                    <th>Amount</th>
-                </thead>
-                <tbody>
-                    {% for transaction in transactions %}
-                    {% for field in transaction %}
-                    <tr>
-                        <td> {{ field }} </td>
-                    </tr>
-                    {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
             <h1>Make transactions</h1>
             <form method="post">
                 {% csrf_token %}
                 {{ form }}
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <table class="table">
+                <thead>
+                    <th>Sender</th>
+                    <th>Receiver</th>
+                    <th>Amount</th>
+                    <th>#</th>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                    {% for field in transaction %}
+                        <td> {{ field }} </td>
+                    {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             <div class=""></div>
 </body>
 {% endblock %}

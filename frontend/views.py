@@ -4,6 +4,7 @@ from authentication.models import FaceAuthUser
 from blockchain.auth_backend import FacialAuth
 from frontend.forms.transaction import Transaction
 
+
 # Create your views here.
 def frontend(request):
     """Show all information stored about a single user.
@@ -14,24 +15,22 @@ def frontend(request):
     Returns:
         render: show_user.html
     """
-
+    user = FaceAuthUser.objects.get(pk=1)
+    global current_user_id
+    current_user_id = user.pk
     bc = Blockchain()
+    bc.setAccounts()
     users = FaceAuthUser.objects.all()
     transactions = bc.getTransactions()
-    print(transactions)
-    user = FacialAuth.get_user()
-    print(username)
     if request.method == 'POST':
         form = Transaction(request.POST)
         if form.is_valid():
-            print(form.cleaned_data["receiver"])
-            print(form.cleaned_data["amount"])
-
+            bc.make_transaction(form.cleaned_data["receiver"], form.cleaned_data["private_key"], form.cleaned_data["amount"])
     form = Transaction
-
+    bc.setTransactions()
     context = {
         'users' : users,
-        'transaction': transactions,
+        'transactions': bc.transactions,
         'form': form
     }
     return render(request, 'frontend.html', context)

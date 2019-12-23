@@ -1,5 +1,5 @@
 from web3 import Web3
-import authentication.views
+import frontend.views
 
 class Blockchain():
 
@@ -36,16 +36,17 @@ class Blockchain():
         return self.transactions
 
     def setTransactions(self):
+        if self.transactions_hashes is []:
+            return []
         for hash in self.transactions_hashes:
             transaction = self.client.eth.getTransaction(hash)
-            self.transactions.append([transaction["blockHash"], transaction["from"], transaction["to"], self.client.fromWei(transaction["value"], 'ether')])
+            self.transactions.append([transaction["from"], transaction["to"], self.client.fromWei(transaction["value"], 'ether'), self.client.toHex(transaction["blockHash"])])
     
     def setAccounts(self):
         self.accounts = self.client.eth.accounts
 
     def make_transaction(self, receiver, private_key, amount):
-        nonce = self.client.eth.getTransactionCount(self.accounts[authentication.views.current_user_id - 1])
-        print(nonce)
+        nonce = self.client.eth.getTransactionCount(self.accounts[frontend.views.current_user_id - 1])
 
         tx = {
             'nonce': nonce,
